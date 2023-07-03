@@ -15,10 +15,10 @@ logging.basicConfig(level=logging.DEBUG)
 
 #  Сюди дадаємо країни, які хочемо додати
 Node = {
-   'UA': 'https://eidas.id.gov.ua',  # Ukraine
-    # "AT": 'https://vidp.gv.at',  # Austria
-    # "EE": 'https://eidastest.eesti.ee',  # Estonia
-    # 'EU': 'https://ec2-108-128-3-247.eu-west-1.compute.amazonaws.com',  # EU
+   # 'UA': 'https://eidas.id.gov.ua',  # Ukraine
+    "AT": 'https://vidp.gv.at',  # Austria
+    "EE": 'https://eidastest.eesti.ee',  # Estonia
+    'CA': 'https://ec2-108-128-3-247.eu-west-1.compute.amazonaws.com',  # EU
 }
 
 saml_engine = Engine('./eIDAS-conf/tomcat/SamlEngine.xml')
@@ -93,7 +93,11 @@ class EidasConfigurator(ABC):
 class ConfigureConnector(EidasConfigurator):
 
     def add_country(self):
-        self.fetcher.add_url(self.url).write()
+        try:
+            self.fetcher.add_url(self.url).write()
+        except Exception as e:
+            _logger.error(f'Error: {e}')
+            return
 
         KeyTool(**ks_sign_service()).add_key(f'{self.crt_alias_prefix}-meta', self.node.get_metadata_cert)
         KeyTool(**ks_metadata_service()).add_key(f'{self.crt_alias_prefix}-meta', self.node.get_signature_cert)
@@ -109,7 +113,12 @@ class ConfigureConnector(EidasConfigurator):
 class ConfigureService(EidasConfigurator):
 
     def add_country(self):
-        self.fetcher.add_url(self.url).write()
+        try:
+            self.fetcher.add_url(self.url).write()
+        except Exception as e:
+            _logger.error(f'Error: {e}')
+            return
+
         self.eidas.add_country(self.country, self.url).save()
 
         KeyTool(**ks_sign_connector()).add_key(f'{self.crt_alias_prefix}-meta', self.node.get_metadata_cert)
