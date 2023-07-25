@@ -1,4 +1,4 @@
-cryptography==41.0.1
+cryptography>=41.0.1
 lxml==4.8.0
 pyjks==20.0.0
 requests==2.25.1
