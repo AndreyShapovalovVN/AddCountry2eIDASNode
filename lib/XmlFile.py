@@ -1,3 +1,7 @@
+# Autor: Andrii Shapovalov
+# Company: eGA
+# Date: 2023-07-19
+# Description: XML file reader
 import logging
 import os
 from os import path

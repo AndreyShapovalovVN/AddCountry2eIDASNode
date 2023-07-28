@@ -1,12 +1,21 @@
+# Autor: Andrii Shapovalov
+# Company: eGA
+# Date: 2023-07-19
+# Description: Parsing configuration file for the engine
 import logging
 import re
 
+from lib.ConfigPatch import ConfigPatch
 from lib.XmlFile import XmlFile, etree
 
 _logger = logging.getLogger(__name__)
+_config = ConfigPatch()
 
 
 class Eidas(XmlFile):
+
+    def __init__(self, file: str = None):
+        super().__init__(file or f'{_config.config_pach}/eidas.xml')
 
     @property
     def _count(self):

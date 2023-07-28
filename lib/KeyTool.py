@@ -1,3 +1,7 @@
+# Autor: Andrii Shapovalov
+# Company: eGA
+# Date: 2023-07-19
+# Description: Wrapper for the keytool command
 import logging
 import subprocess
 import tempfile
@@ -6,12 +10,17 @@ import jks
 from cryptography import x509
 from cryptography.hazmat.primitives.serialization import Encoding
 
+from lib.ConfigPatch import ConfigPatch
+
 _logger = logging.getLogger(__name__)
+_config = ConfigPatch()
 
 
 class KeyTool:
     """Wrapper for the keytool command"""
+
     def __init__(self, file: str, password: str):
+        _logger.debug(f'Loading {file} with {password}')
         self.file = file
         self.password = password
         self._keystore = jks.KeyStore.load(file, password)

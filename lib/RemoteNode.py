@@ -1,3 +1,7 @@
+# Autor: Andrii Shapovalov
+# Company: eGA
+# Date: 2023-07-19
+# Description: Read the XML file from a remote URL
 import logging
 
 import requests
@@ -19,7 +23,7 @@ class GetCert:
     def is_idp_or_sp(self) -> str:
         """Return the type of the node"""
         _logger.debug(f'is_idp_or_sp: ST - {self._sp()}, iDP - {self._idp()}')
-        return 'servise' if self._idp() else 'connector' if self._sp() else None
+        return 'servise' if self._idp() else 'Connector' if self._sp() else None
 
     def _find_element(self, path: str) -> etree.Element:
         """Find the element in the XML file"""
