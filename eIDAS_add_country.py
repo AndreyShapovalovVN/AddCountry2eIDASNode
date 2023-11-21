@@ -9,17 +9,10 @@ from lib.KeyStore import KeyStore
 from lib.KeyTool import KeyTool
 from lib.MetadataFetcher import MetadataFetcher
 from lib.RemoteNode import RemoteNode
+from Node import Node
 
 _logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
-
-#  Сюди дадаємо країни, які хочемо додати
-Node = {
-   # 'UA': 'https://eidas.id.gov.ua',  # Ukraine
-    "AT": 'https://vidp.gv.at',  # Austria
-    "EE": 'https://eidastest.eesti.ee',  # Estonia
-    'CA': 'https://ec2-108-128-3-247.eu-west-1.compute.amazonaws.com',  # EU
-}
 
 saml_engine = Engine('./eIDAS-conf/tomcat/SamlEngine.xml')
 
