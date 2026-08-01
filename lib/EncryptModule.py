@@ -1,6 +1,8 @@
 import logging
+from typing import cast
 
 from lxml import etree
+from lxml.etree import _Element
 
 from lib.XmlFile import XmlFile
 
@@ -10,7 +12,7 @@ _logger = logging.getLogger(__name__)
 class EncryptModule(XmlFile):
 
     def keystore(self, key: str):
-        entries = self._xml.xpath(f'/properties/entry[@key="{key}"]')
+        entries = cast(list[_Element], self._xml.xpath(f'/properties/entry[@key="{key}"]'))
         if entries:
             _logger.debug(f'Found {key} in {self.file}')
             return entries[0].text

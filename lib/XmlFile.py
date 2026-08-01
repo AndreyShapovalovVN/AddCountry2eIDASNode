@@ -3,6 +3,7 @@ import os
 from os import path
 
 from lxml import etree
+from lxml.etree import _ElementTree
 
 _logger = logging.getLogger(__name__)
 
@@ -26,6 +27,6 @@ class XmlFile:
         _logger.debug(f'Wrote {self.file}')
 
     @property
-    def xml(self) -> etree.ElementTree:
+    def xml(self) -> _ElementTree:
         """Return the XML file"""
         return self._xml
