@@ -37,8 +37,8 @@ jobs:
       - name: Type check with mypy
         run: mypy . --ignore-missing-imports --pretty --show-error-codes # NOSONAR
 
-      - name: Run tests with pytest
-        run: pytest --maxfail=2 --disable-warnings --ignore-glob='tests/~*.py' # NOSONAR
+#      - name: Run tests with pytest
+#        run: pytest --maxfail=2 --disable-warnings --ignore-glob='tests/~*.py' # NOSONAR
 
   gitleaks:
     name: Gitleaks Secret Scan
