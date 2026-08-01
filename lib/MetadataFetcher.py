@@ -3,6 +3,10 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
+class UrlAlreadyInWhitelistError(Exception):
+    """Raised when metadata URL is already present in whitelist."""
+
+
 class MetadataFetcher:
     def __init__(self, file: str):
         with open(file, 'r') as f:
@@ -15,7 +19,7 @@ class MetadataFetcher:
             if vereable == 'metadata.location.whitelist':
                 urls = value.split(';')
                 if url in urls:
-                    raise Exception('URL already in file')
+                    raise UrlAlreadyInWhitelistError('URL already in file')
                 urls.append(url)
                 new_value = ';'.join(urls)
                 self._content[i] = f'{vereable}={new_value}\n'

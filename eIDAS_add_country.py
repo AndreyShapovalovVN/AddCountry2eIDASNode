@@ -7,7 +7,7 @@ from lib.EncryptionConf import EncryptionConf
 from lib.Engine import Engine
 from lib.KeyStore import KeyStore
 from lib.KeyTool import KeyTool
-from lib.MetadataFetcher import MetadataFetcher
+from lib.MetadataFetcher import MetadataFetcher, UrlAlreadyInWhitelistError
 from lib.RemoteNode import RemoteNode
 from Node import Node
 
@@ -88,8 +88,8 @@ class ConfigureConnector(EidasConfigurator):
     def add_country(self):
         try:
             self.fetcher.add_url(self.url).write()
-        except Exception as e:
-            _logger.error(f'Error: {e}')
+        except UrlAlreadyInWhitelistError as e:
+            _logger.exception(f'Error: {e}')
             return
 
         KeyTool(**ks_sign_service()).add_key(f'{self.crt_alias_prefix}-meta', self.node.get_metadata_cert)
@@ -108,8 +108,8 @@ class ConfigureService(EidasConfigurator):
     def add_country(self):
         try:
             self.fetcher.add_url(self.url).write()
-        except Exception as e:
-            _logger.error(f'Error: {e}')
+        except UrlAlreadyInWhitelistError as e:
+            _logger.exception(f'Error: {e}')
             return
 
         self.eidas.add_country(self.country, self.url).save()
