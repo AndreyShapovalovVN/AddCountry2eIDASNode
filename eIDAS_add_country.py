@@ -88,8 +88,8 @@ class ConfigureConnector(EidasConfigurator):
     def add_country(self):
         try:
             self.fetcher.add_url(self.url).write()
-        except UrlAlreadyInWhitelistError as e:
-            _logger.exception(f'Error: {e}')
+        except UrlAlreadyInWhitelistError:
+            _logger.exception('Failed to update connector metadata whitelist')
             return
 
         KeyTool(**ks_sign_service()).add_key(f'{self.crt_alias_prefix}-meta', self.node.get_metadata_cert)
@@ -108,8 +108,8 @@ class ConfigureService(EidasConfigurator):
     def add_country(self):
         try:
             self.fetcher.add_url(self.url).write()
-        except UrlAlreadyInWhitelistError as e:
-            _logger.exception(f'Error: {e}')
+        except UrlAlreadyInWhitelistError:
+            _logger.exception('Failed to update service metadata whitelist')
             return
 
         self.eidas.add_country(self.country, self.url).save()
